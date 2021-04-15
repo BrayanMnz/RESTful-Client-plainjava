@@ -12,24 +12,107 @@ import java.io.InputStreamReader;
 
 public class App {
 
-
     public static void main(String[] args) throws IOException{
-        
+
+      RestClient();
+    }
+
+
+    private static void RestClient()throws IOException{
+      int select = menu();
+        if(select == 1 ){
+            ListarEstudiantes();
+
+         }
+        else if (select == 2 ){
+          ConsultarEstudiante();
+        }
+        else if (select == 3 ){
+          CrearEstudiante();
+        }
+        else if (select == 4 ){
+          EliminarEstudiante();
+        }
+        else {
+          System.out.println("OPCIÓN NO DISPONIBLE! \n Intente de nuevo \n");
+          
+
+        }
+          aftermenu();
+      }
+
+
+
+ //====================================================================================
+ /******** ********* ******** *********   M E N U ******** ********* ******** *********/
+  //===================================================================================
+
+  private static void aftermenu(){
+    Scanner input = new Scanner(System.in);
+
+    /***************************************************/
+    System.out.println("\n========================================\n");
+    System.out.println("\nDesea Realizar otra opción ?  \n(1 para sí / 0 para no): ");
+    int x = input.nextInt(); 
+try {
+  if(x==1){
+    RestClient();
+  }else{
+    System.out.println("\n\nCLIENTE REST REALIZADO POR BRAYAN MUÑOZ V.  2017-0770 ");
+  }
+} catch (IOException e) {
+  //TODO: handle exception
+  System.out.println("Ocurrió un error: " +e);
+}
+    
+    
+    }
+
+  
+    private static int menu(){
+      int selection;
+      Scanner input = new Scanner(System.in);
+
+      /***************************************************/
+
+      System.out.println("\nSeleccione uno de los incisos de la práctica: ");
+      System.out.println("---------------------------------------------\n");
+      System.out.println("1 - Listar Todos los estudiantes.");
+      System.out.println("2 - Consultar Estudiantes.");
+      System.out.println("3 - Crear un nuevo estudiante.");
+      System.out.println("4 - Borrar un estudiante."); 
+
+      selection = input.nextInt();
+      return selection;   
+      }
+
+
+  //====================================================================================
+  /*  ******* *********  ********* Listar Estudiantes ********* ******** ********    */
+ //===================================================================================
+     private static void ListarEstudiantes() throws IOException{ 
+      System.out.println("\n========================================\n");
 
      HttpResponse<JsonNode> ListadoEstudiantes = Unirest.get("http://localhost:7000/api/estudiante")
      .header("accept", "application/json")
      .asJson();
 
-    System.out.println("Inciso No. 1 ==> Listar Todos los estudiantes: \n"+ListadoEstudiantes.getBody()+"\n");
+     System.out.println("Inciso No. 1 ==> Listar Todos los estudiantes: \n"+ListadoEstudiantes.getBody()+"\n");
 
-    System.out.println("\n========================================\n");
+     
+
+    }
 
 
+//====================================================================================
+/*  ******* *********  ********* Consultar Estudiante ********* ******** ********    */
+ //===================================================================================
+    private static void ConsultarEstudiante()throws IOException{
+      System.out.println("\n========================================\n");
     //======================================================================================
     System.out.println("Consultar Estudiante. \n");
 
-   
-   
+ 
     System.out.println("Inserte matricula a consultar: ");
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
     Scanner in = new Scanner(System.in);
@@ -45,9 +128,32 @@ public class App {
     System.out.println("El estudiante consultado es: \n"+consultaEstudiante.getBody());
     System.out.println("\n");
 
+    }
 
-   
-     //======================================================================================
+
+
+//====================================================================================
+/*  ******* *********  ********* Eliminar Estudiante ********* ******** ********    */
+//===================================================================================
+      private static void EliminarEstudiante() throws IOException{
+      //======================================================================================
+      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+      System.out.println("\n========================================\n");
+      System.out.println("Eliminar un estudiante. \n");
+      System.out.println("\n Inserte matricula de estudiante a eliminar: \n");
+      String eliminarEst = br.readLine();
+
+      HttpResponse eliminarEstudiante = Unirest.delete("http://localhost:7000/api/estudiante/" + eliminarEst).asEmpty();
+
+      System.out.println("\nEstudiante eliminado" );
+      }
+
+
+
+
+      private static void CrearEstudiante()throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+       //======================================================================================
      System.out.println("\n========================================\n");
      System.out.println("Crear Estudiante. \n");
 
@@ -69,22 +175,9 @@ public class App {
      .header("Content-Type", "application/json")
      .body(crear)
      .asJson();
-   
+
+      }
 
 
 
-
-
-  //======================================================================================
-  System.out.println("\n========================================\n");
-    System.out.println("Eliminar un estudiante. \n");
-     System.out.println("\n Inserte matricula de estudiante a eliminar: \n");
-     String eliminarEst = br.readLine();
-
-     HttpResponse eliminarEstudiante = Unirest.delete("http://localhost:7000/api/estudiante/" + eliminarEst).asEmpty();
-
-     System.out.println("\nEstudiante eliminado" );
-
-
-    }
 }
