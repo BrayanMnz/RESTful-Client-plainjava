@@ -1,0 +1,10 @@
+#       +-+-+-+-+-+ +-+-+-+ +-+-+-+-+-+
+#        PYTHON VERSION 3.8.2 REQUIRED
+#       +-+-+-+-+-+ +-+-+-+ +-+-+-+-+-+
+#
+# pip3.8 install -r requirements.txt to install the dependencies
+
+suds-py3
+clint==0.5.1
+colorama==0.4.4
+pyfiglet==0.8.post1
