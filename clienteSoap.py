@@ -68,7 +68,7 @@ def main():
             mat = input("\nInserte matricula del Estudiante a Eliminar : ")
             EliminarEstudiante(mat)
         elif choice == '0':
-	    print('\n\nCLIENTE SOAP REALIZADO POR BRAYAN MUÑOZ V.  2017-0770 \n')
+            print('\n\nCLIENTE SOAP REALIZADO POR BRAYAN MUÑOZ V.  2017-0770 \n')
             exit()
 
 
